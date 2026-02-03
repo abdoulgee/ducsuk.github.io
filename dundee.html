@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUCS | Dundee Ulster Community Scotland</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agency: {
+                            900: '#0a0a0a',
+                            800: '#111111',
+                            700: '#1a1a1a',
+                            600: '#2d2d2d',
+                            accent: '#C8102E', // Deep Red
+                            gold: '#FFD700',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #2d2d2d 1px, transparent 1px), linear-gradient(to bottom, #2d2d2d 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.3;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C8102E;
+        }
+    </style>
+</head>
+<body class="bg-agency-900 text-gray-200 font-sans antialiased selection:bg-agency-accent selection:text-white">
+
+    <!-- Scanline Effect for Agency Vibe -->
+    <div class="scanline"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-agency-900/90 backdrop-blur-md border-b border-agency-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <img src="red.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-agency-600 object-cover">
+                    <div class="flex flex-col">
+                        <span class="font-mono text-xl font-bold tracking-tighter text-white">DUCS<span class="text-agency-accent">.UK</span></span>
+                        <span class="text-[10px] text-gray-400 tracking-widest uppercase">Community Initiative</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="font-mono text-sm hover:text-agency-accent transition-colors duration-300">/// HOME</a>
+                        <a href="#mission" class="font-mono text-sm hover:text-agency-accent transition-colors duration-300">/// MISSION</a>
+                        <a href="#events" class="font-mono text-sm hover:text-agency-accent transition-colors duration-300">/// EVENTS</a>
+                        <a href="#remembrance" class="font-mono text-sm text-agency-accent hover:text-white transition-colors duration-300">/// IN MEMORIAM</a>
+                        <a href="#contact" class="px-4 py-2 border border-gray-600 rounded hover:bg-white hover:text-black transition-all duration-300 font-mono text-sm">CONTACT</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-agency-800 border-b border-agency-600">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium hover:bg-agency-700 font-mono">/// HOME</a>
+                <a href="#mission" class="block px-3 py-2 text-base font-medium hover:bg-agency-700 font-mono">/// MISSION</a>
+                <a href="#events" class="block px-3 py-2 text-base font-medium hover:bg-agency-700 font-mono">/// EVENTS</a>
+                <a href="#remembrance" class="block px-3 py-2 text-base font-medium text-red-500 hover:bg-agency-700 font-mono">/// IN MEMORIAM</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium hover:bg-agency-700 font-mono">/// CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Grid -->
+        <div class="absolute inset-0 grid-bg opacity-20"></div>
+        
+        <!-- Radial Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-agency-900 via-transparent to-agency-900"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8 flex justify-center animate-fade-in-up">
+                <!-- User specified red.jpg for logo/hero area -->
+                <img src="red.jpg" alt="Agency Logo" class="h-48 w-48 md:h-64 md:w-64 object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] grayscale hover:grayscale-0 transition-all duration-700">
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4 uppercase">
+                Dundee Ulster <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Community Scotland</span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 font-mono">
+                <span class="text-agency-accent">>></span> REVIVING THE ANCIENT BOND.
+            </p>
+
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#mission" class="px-8 py-3 border border-agency-accent text-agency-accent hover:bg-agency-accent hover:text-white transition-all duration-300 font-mono uppercase tracking-widest text-sm font-bold">
+                    Access Dossier
+                </a>
+                <a href="#events" class="px-8 py-3 bg-white text-black hover:bg-gray-300 transition-all duration-300 font-mono uppercase tracking-widest text-sm font-bold">
+                    Events
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section (Updated) -->
+    <section id="mission" class="py-20 bg-agency-800 border-t border-agency-700 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                
+                <!-- Text Content -->
+                <div class="space-y-8">
+                    <div>
+                        <div class="inline-block px-3 py-1 bg-agency-700 border border-agency-600 rounded text-xs font-mono text-agency-accent mb-2">
+                            MISSION STATEMENT
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white uppercase tracking-wide leading-tight">
+                            Sovereignty, Safety, & <br/> The Right To Dwell
+                        </h2>
+                        <div class="h-1 w-20 bg-agency-accent mt-4"></div>
+                    </div>
+                    
+                    <div class="prose prose-invert prose-sm max-w-none text-gray-300 leading-relaxed">
+                        <p class="font-medium text-white text-lg">
+                            DUCSUK CIC is a community-led grassroots organization dedicated to the peaceful activation of derelict urban spaces for the benefit of Dundee’s most vulnerable citizens.
+                        </p>
+                        <p>
+                            We believe that land neglect is a civic failure, and we stand at the intersection of Human Rights advocacy and Advanced Community Safety.
+                        </p>
+                    </div>
+
+                    <!-- Legal Foundation -->
+                    <div class="bg-agency-900 border-l-4 border-agency-accent p-6 rounded-r-sm">
+                        <h3 class="text-white font-bold uppercase mb-4 text-sm font-mono flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-agency-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                            Legal & Moral Foundation
+                        </h3>
+                        <p class="text-xs text-gray-400 mb-3">Operating under the European Convention on Human Rights:</p>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li>
+                                <strong class="text-white">Article 8:</strong> We defend the fundamental right of every individual to have a place of residence and dignity, standing against the systemic displacement of the homeless.
+                            </li>
+                            <li>
+                                <strong class="text-white">Article 11:</strong> We exercise our right to peacefully gather and organize for social, cultural, and political improvement.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Security -->
+                    <div>
+                        <h3 class="text-white font-bold uppercase mb-4 text-sm font-mono border-b border-agency-600 pb-2">Unrivaled Security & Oversight</h3>
+                        <p class="text-gray-400 text-sm mb-4">Unlike traditional grassroots movements, DUCSUK is managed with the precision of a professional security firm.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex">
+                                <span class="text-agency-accent font-bold mr-3 font-mono">01</span>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm">The Birmingham Standard</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Protocols derived from elite UK standards, including Counter-Terrorism trained personnel and a core team of 6 SIA-licensed professionals.</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <span class="text-agency-accent font-bold mr-3 font-mono">02</span>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm">Elite Management</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Site Safety overseen by a team formerly attached to multi-national organizations, ensuring the most secure, fire-safe, and disciplined sites in Scotland.</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <span class="text-agency-accent font-bold mr-3 font-mono">03</span>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm">Peaceful Deterrence</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Our presence is a "Safety Shield" that allows creative expression and crisis support to flourish without interference.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border border-agency-600 rounded bg-agency-900/50">
+                        <h3 class="text-agency-gold font-mono text-xs uppercase mb-2">Primary Objective</h3>
+                        <p class="text-white text-sm italic">"We are building a Sovereign Community Hub—a place where the homeless find shelter, where local artists find a voice, and where the people of Dundee can reclaim their city. We are not just protesting a lack of space; we are providing the solution."</p>
+                    </div>
+                </div>
+
+                <!-- Image Visual -->
+                <div class="relative group sticky top-24">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-agency-accent to-blue-900 opacity-25 blur transition duration-1000 group-hover:opacity-75"></div>
+                    <div class="relative bg-agency-900 ring-1 ring-gray-800 rounded-sm p-2">
+                        <!-- Using redtemflat.jpg -->
+                        <img src="redtemflat.jpg" alt="DUCS Flag" class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/80 p-2 border-t border-agency-600">
+                            <p class="font-mono text-xs text-center text-agency-gold uppercase tracking-widest">Lamh Derg Abu</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Decor element -->
+                    <div class="mt-8 grid grid-cols-2 gap-4">
+                        <div class="bg-agency-900 p-4 border border-agency-700 text-center">
+                             <div class="text-2xl font-bold text-white mb-1">100%</div>
+                             <div class="text-[10px] text-gray-500 uppercase tracking-widest font-mono">Community Led</div>
+                        </div>
+                        <div class="bg-agency-900 p-4 border border-agency-700 text-center">
+                             <div class="text-2xl font-bold text-white mb-1">SIA</div>
+                             <div class="text-[10px] text-gray-500 uppercase tracking-widest font-mono">Licensed Security</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Section (Preserved) -->
+    <section id="events" class="py-24 bg-agency-900 relative border-t border-agency-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                 <span class="font-mono text-agency-accent tracking-[0.2em] text-sm">DUCSUK PRESENTS</span>
+                <h2 class="mt-2 text-3xl md:text-5xl font-bold text-white uppercase">A Secret Soundwave</h2>
+                <div class="mt-4 mx-auto w-24 h-1 bg-gray-700"></div>
+                <p class="mt-4 text-agency-accent font-mono text-sm tracking-widest uppercase">The National Task Force for Community Cohesion</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 bg-agency-800 border border-agency-700 rounded-lg overflow-hidden">
+                <!-- Event Image -->
+                <div class="lg:col-span-2 relative h-96 lg:h-auto">
+                     <img src="event.jpg" alt="Secret Sound Wave Event" class="w-full h-full object-cover">
+                     <!-- Date Badge -->
+                     <div class="absolute top-4 left-4 bg-agency-accent text-white p-3 text-center border border-white/20 shadow-lg">
+                         <span class="block text-2xl font-bold leading-none">11</span>
+                         <span class="block text-xs font-mono uppercase">JULY</span>
+                     </div>
+                </div>
+
+                <!-- Event Details (Full Briefing) -->
+                <div class="lg:col-span-3 p-8 md:p-12 flex flex-col justify-center border-l border-agency-700">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs font-mono text-green-500 uppercase tracking-widest">Mobilization Active</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white uppercase mb-4">Mission Directive</h3>
+                    
+                    <div class="prose prose-invert prose-sm max-w-none text-gray-300 space-y-6">
+                        <p>
+                            On July 11th, the underground rises. DUCSUK CIC is bridging the gap between North and South, bringing together the most disciplined crews from across the UK to reclaim our urban spaces through the power of the Bassline.
+                        </p>
+
+                        <!-- Personnel / DJs -->
+                        <div class="border border-agency-600 bg-agency-900/50 p-4">
+                            <h4 class="text-agency-accent font-bold font-mono uppercase text-xs mb-2 border-b border-agency-700 pb-1">The Sonic Shield (DJs & Crews)</h4>
+                            <ul class="list-none space-y-2 text-xs">
+                                <li><strong class="text-white">JASE GALEGEAR & D DRIVE:</strong> Heavyweight architects of the rhythm. High-velocity sets.</li>
+                                <li><strong class="text-white">SNOOKS DNB:</strong> Drum & Bass vanguard. Precise, deep, and relentless.</li>
+                                <li><strong class="text-white">SWITCH UNDERGROUND BASS:</strong> Pulse of the hidden streets. Dark, driving frequencies.</li>
+                            </ul>
+                        </div>
+
+                         <!-- Personnel / MCs -->
+                         <div class="border border-agency-600 bg-agency-900/50 p-4">
+                            <h4 class="text-agency-accent font-bold font-mono uppercase text-xs mb-2 border-b border-agency-700 pb-1">The Command on the Mic (MCs)</h4>
+                            <ul class="list-none space-y-2 text-xs">
+                                <li><strong class="text-white">G DIZZLE (SPARTANZ):</strong> Military-grade precision and "Frontline" energy.</li>
+                                <li><strong class="text-white">GIMIK & CREW (THE TAKEOVER):</strong> A coordinated strike of vocal talent.</li>
+                                <li><strong class="text-white">NK KNEECAP (LOCAL):</strong> The Home Guard. Authentic northern soul.</li>
+                                <li><strong class="text-white">DAVINCHI:</strong> The lyrical artist painting the revolution.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Sovereign Zone -->
+                        <div>
+                            <h4 class="text-white font-bold uppercase text-sm mb-2">The Sovereign Zone</h4>
+                            <p class="text-xs text-gray-400 mb-2">This is a Secure Community Activation. We provide sanctuary:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                                <div class="flex items-center"><span class="text-agency-accent mr-2">■</span> Command Post (Parking/Camping)</div>
+                                <div class="flex items-center"><span class="text-agency-accent mr-2">■</span> The Brotherhood (BBQ/Refreshments)</div>
+                                <div class="flex items-center"><span class="text-agency-accent mr-2">■</span> The Chill-Out (Strategy Area)</div>
+                                <div class="flex items-center"><span class="text-agency-accent mr-2">■</span> Special Guest Appearances</div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-700 pt-4 mt-2">
+                             <p class="font-mono text-xs uppercase text-gray-400"><span class="text-agency-accent">LOCATION:</span> Encrypted. Deep in the heart of Dundee.</p>
+                             <p class="font-mono text-xs uppercase text-gray-400"><span class="text-agency-accent">MISSION:</span> Unity through Sound. Sovereignty through Discipline.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                         <a href="tel:+447943622052" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-sm text-white bg-agency-accent hover:bg-red-700 transition-all font-mono uppercase tracking-widest">
+                            Join The Mission
+                        </a>
+                        <div class="px-6 py-3 border border-agency-600 rounded-sm text-center">
+                            <span class="block text-xs font-mono text-gray-500 uppercase">Secure Line</span>
+                            <span class="block text-white font-bold">+44 7943 622052</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Remembrance Section -->
+    <section id="remembrance" class="py-24 bg-agency-800 border-t border-agency-700 relative">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 p-10 opacity-5">
+            <svg width="200" height="200" viewBox="0 0 24 24" fill="white"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="font-mono text-agency-accent tracking-[0.2em] text-sm">ETERNAL PATROL</span>
+                <h2 class="mt-2 text-3xl md:text-5xl font-bold text-white uppercase">In Memoriam</h2>
+                <div class="mt-4 mx-auto w-24 h-1 bg-gray-700"></div>
+                <p class="mt-4 text-gray-400 max-w-2xl mx-auto">Remembering our fallen brothers and sisters with dignity and respect. Their memory remains within the heart of our community.</p>
+            </div>
+
+            <!-- Memorial Card -->
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-agency-900 border border-agency-700 overflow-hidden shadow-2xl relative group">
+                    <!-- Black Ribbon Effect -->
+                    <div class="absolute top-0 right-0 bg-black w-24 h-24 flex items-center justify-center z-10" style="clip-path: polygon(100% 0, 0 0, 100% 100%);">
+                        <div class="absolute top-4 right-2 text-white text-xs font-mono transform rotate-45">REST</div>
+                    </div>
+
+                    <div class="md:flex">
+                        <!-- Image Container -->
+                        <div class="md:w-1/3 relative h-96 md:h-auto bg-black">
+                            <!-- Using death.jpg -->
+                            <img class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500" src="death.jpg" alt="Simon Paul Walker">
+                            <div class="absolute inset-0 bg-gradient-to-t from-agency-900 via-transparent to-transparent md:bg-gradient-to-r"></div>
+                        </div>
+                        
+                        <!-- Text Details -->
+                        <div class="p-8 md:w-2/3 flex flex-col justify-center">
+                            <div class="uppercase tracking-wide text-sm text-agency-accent font-semibold mb-2 font-mono">Roll of Honour</div>
+                            <h3 class="block mt-1 text-3xl leading-tight font-bold text-white mb-4">Simon Paul Walker</h3>
+                            
+                            <div class="space-y-4 text-gray-300 font-light">
+                                <p class="flex items-start">
+                                    <span class="text-gray-500 w-24 font-mono text-sm pt-1 uppercase">Date:</span>
+                                    <span>16th January 2026</span>
+                                </p>
+                                <p class="flex items-start">
+                                    <span class="text-gray-500 w-24 font-mono text-sm pt-1 uppercase">Late Of:</span>
+                                    <span>6 Loughview Glen</span>
+                                </p>
+                                <div class="border-t border-gray-700 my-4 pt-4">
+                                    <p class="italic text-gray-400">
+                                        "Beloved husband of Lindsay, much loved father of Alyson, Kyle and Matthew and devoted grandfather of Jaxon and Kaiden."
+                                    </p>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-4">
+                                    Funeral service held from his home on Monday 26th at 9am, afterwards to Roselawn Crematorium.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-agency-900 border-t border-agency-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6 uppercase">Establish Comms</h2>
+                    <p class="text-gray-400 mb-8">
+                        To connect with the press office or for general inquiries regarding community events, utilize the channels below.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4 p-4 bg-agency-800 border-l-4 border-agency-accent rounded-r-md">
+                            <div class="text-agency-accent">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-mono uppercase">Email Uplink</p>
+                                <a href="mailto:pressoffice24@ducsuk.org" class="text-lg text-white hover:text-agency-accent transition-colors font-mono">pressoffice24@ducsuk.org</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 p-4 bg-agency-800 border-l-4 border-agency-accent rounded-r-md">
+                            <div class="text-agency-accent">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-mono uppercase">Secure Voice</p>
+                                <a href="tel:+447943622052" class="text-lg text-white hover:text-agency-accent transition-colors font-mono">+44 7943 622052</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Form (Frontend Only) -->
+                <div class="bg-agency-800 p-8 rounded border border-agency-700 relative">
+                     <!-- Corner Markers -->
+                     <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-agency-accent"></div>
+                     <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-agency-accent"></div>
+                     <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-agency-accent"></div>
+                     <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-agency-accent"></div>
+
+                    <form onsubmit="event.preventDefault(); alert('Transmission simulated. Use email for actual contact.');">
+                        <div class="mb-4">
+                            <label class="block text-gray-500 text-xs font-mono uppercase mb-2">Identifier / Name</label>
+                            <input type="text" class="w-full bg-agency-900 border border-agency-600 text-white p-3 rounded focus:outline-none focus:border-agency-accent focus:ring-1 focus:ring-agency-accent font-mono transition-all">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-500 text-xs font-mono uppercase mb-2">Return Address / Email</label>
+                            <input type="email" class="w-full bg-agency-900 border border-agency-600 text-white p-3 rounded focus:outline-none focus:border-agency-accent focus:ring-1 focus:ring-agency-accent font-mono transition-all">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-500 text-xs font-mono uppercase mb-2">Briefing / Message</label>
+                            <textarea rows="4" class="w-full bg-agency-900 border border-agency-600 text-white p-3 rounded focus:outline-none focus:border-agency-accent focus:ring-1 focus:ring-agency-accent font-mono transition-all"></textarea>
+                        </div>
+                        <button class="w-full bg-agency-accent text-white font-bold py-3 px-4 rounded hover:bg-red-700 transition duration-300 font-mono uppercase tracking-widest">
+                            Send Transmission
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-agency-700 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <span class="font-bold font-mono text-white text-lg">DUCS</span>
+                <p class="text-xs text-gray-600 mt-1 uppercase">Dundee Ulster Community Scotland</p>
+            </div>
+            
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">Terms</a>
+            </div>
+
+            <div class="mt-4 md:mt-0 text-xs text-gray-700 font-mono">
+                &copy; 2026 DUCS. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
